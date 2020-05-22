@@ -70,20 +70,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Users\willi\Desktop\Workspace\OpenGL\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\willi\Desktop\Workspace\OpenGL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\willi\Desktop\Workspace\OpenGLAbstraction\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\willi\Desktop\Workspace\OpenGLAbstraction\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>C:\Users\willi\Desktop\Workspace\OpenGL\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\willi\Desktop\Workspace\OpenGL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\willi\Desktop\Workspace\OpenGLAbstraction\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\willi\Desktop\Workspace\OpenGLAbstraction\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>C:\Users\willi\Desktop\Workspace\OpenGL\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\willi\Desktop\Workspace\OpenGL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\willi\Desktop\Workspace\OpenGLAbstraction\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\willi\Desktop\Workspace\OpenGLAbstraction\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>C:\Users\willi\Desktop\Workspace\OpenGL\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\willi\Desktop\Workspace\OpenGL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\willi\Desktop\Workspace\OpenGLAbstraction\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\willi\Desktop\Workspace\OpenGLAbstraction\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -142,7 +142,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\FirstOpenGlApp\glad.c" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="glad.c" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="main.cpp" />
@@ -155,12 +156,12 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderProgram.h" />
-    <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="VertexBuffer.h" />

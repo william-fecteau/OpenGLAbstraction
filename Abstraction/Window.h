@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Camera.h"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string>
@@ -18,6 +20,33 @@ private:
 	std::string _name;
 	//Pointer to the GLFW Window
 	GLFWwindow* _window;
+	//Time tracking
+	float _deltaTime, _lastFrameTime;
+	//Mouse tracking
+	float _mouseXOffset, _mouseYOffset, _lastMouseX, _lastMouseY;
+	bool _firstMouse;
+	//TODO: TEMPORAIRE
+	Camera _camera;
+
+
+	/**
+	*	Nested class that keeps a static instance of this window -> It is used to 
+	*   access private attributes of this Window class and still be able to link callback to GLFW window
+	*/
+	class GLFWCallbackWrapper
+	{
+	private:
+		static Window* s_window;
+	public:
+		GLFWCallbackWrapper() = delete;
+		GLFWCallbackWrapper(const GLFWCallbackWrapper&) = delete;
+		GLFWCallbackWrapper(GLFWCallbackWrapper&&) = delete;
+		~GLFWCallbackWrapper() = delete;
+
+		static void MousePositionCallback(GLFWwindow* window, double positionX, double positionY);
+		static void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+		static void SetWindow(Window* window);
+	};
 
 public:
 	/**
@@ -39,13 +68,23 @@ public:
 	*/
 	virtual void Render();
 
-	/**
-	*	Input polling that can be overwritten
-	*/
-	virtual void PollInput();
-
-	/**
-	*	Getter on _shouldClose
-	*/
+	//Getters
 	const bool ShouldClose() const { return _shouldClose; }
+	GLFWwindow* GetGLFWWindow() const { return _window; }
+	const float GetDeltaTime() const { return _deltaTime; }
+	const float GetMouseXOffset() const { return _mouseXOffset; }
+	const float GetMouseYOffset() const { return _mouseYOffset; }
+	Camera GetCamera() const { return _camera; }
+
+private:
+	/**
+	*	Update delta time
+	*/
+	void UpdateDeltaTime();
+
+	//Callbacks
+	void SetCallbackFunctions();
+	void MousePositionCallback(double xpos, double ypos);
+	void KeyboardCallback(int key, int scancode, int action, int mods);
+	void PollInput();
 };

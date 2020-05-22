@@ -1,5 +1,5 @@
 #include "Image.h"
-#include "stb_image.h"
+#include <stb_image/stb_image.h>
 
 Image::Image(const std::string& path, const bool transparency)
 {
