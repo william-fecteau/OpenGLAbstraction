@@ -1,6 +1,6 @@
-#include "Camera.h"
+#include "Camera3D.h"
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : _front(glm::vec3(0.0f, 0.0f, -1.0f)), _movementSpeed(SPEED), _mouseSensitivity(SENSITIVITY)
+Camera3D::Camera3D(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : _front(glm::vec3(0.0f, 0.0f, -1.0f)), _movementSpeed(SPEED), _mouseSensitivity(SENSITIVITY)
 {
     _position = position;
     _worldUp = up;
@@ -9,7 +9,7 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : _fron
     UpdateCameraVectors();
 }
 
-Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : _front(glm::vec3(0.0f, 0.0f, -1.0f)), _movementSpeed(SPEED), _mouseSensitivity(SENSITIVITY)
+Camera3D::Camera3D(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : _front(glm::vec3(0.0f, 0.0f, -1.0f)), _movementSpeed(SPEED), _mouseSensitivity(SENSITIVITY)
 {
     _position = glm::vec3(posX, posY, posZ);
     _worldUp = glm::vec3(upX, upY, upZ);
@@ -18,7 +18,7 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
     UpdateCameraVectors();
 }
 
-void Camera::ProcessKeyboard(CameraMovement direction, float deltaTime)
+void Camera3D::ProcessKeyboard(CameraMovement direction, float deltaTime)
 {
     float velocity = _movementSpeed * deltaTime;
     if (direction == CameraMovement::FORWARD)
@@ -31,7 +31,7 @@ void Camera::ProcessKeyboard(CameraMovement direction, float deltaTime)
         _position += _right * velocity;
 }
 
-void Camera::ProcessMouseMovement(float xoffset, float yoffset)
+void Camera3D::ProcessMouseMovement(float xoffset, float yoffset)
 {
     xoffset *= _mouseSensitivity;
     yoffset *= _mouseSensitivity;
@@ -45,7 +45,7 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset)
     UpdateCameraVectors();
 }
 
-void Camera::UpdateCameraVectors()
+void Camera3D::UpdateCameraVectors()
 {
     glm::vec3 front;
     front.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));

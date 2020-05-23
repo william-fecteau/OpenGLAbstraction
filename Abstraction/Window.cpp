@@ -27,6 +27,8 @@ Window::Window(const std::string& name, const int width, const int height) : _na
 	glEnable(GL_DEPTH_TEST);
 	SetCallbackFunctions();
 
+	_renderer = new Renderer();
+
 	UpdateDeltaTime();
 
 	_shouldClose = glfwWindowShouldClose(_window);
@@ -42,6 +44,8 @@ void Window::Render()
 	UpdateDeltaTime();
 
 	PollInput();
+
+	_renderer->Render();
 
 	glfwSwapBuffers(_window);
 	glfwPollEvents();
@@ -63,16 +67,13 @@ void Window::UpdateDeltaTime()
 void Window::PollInput()
 {
 	if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
-		_camera.ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
+		_renderer->GetCamera().ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
 	if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS)
-		_camera.ProcessKeyboard(CameraMovement::BACKWARD, _deltaTime);
+		_renderer->GetCamera().ProcessKeyboard(CameraMovement::BACKWARD, _deltaTime);
 	if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS)
-		_camera.ProcessKeyboard(CameraMovement::LEFT, _deltaTime);
+		_renderer->GetCamera().ProcessKeyboard(CameraMovement::LEFT, _deltaTime);
 	if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS)
-		_camera.ProcessKeyboard(CameraMovement::RIGHT, _deltaTime);
-
-	if (glfwGetKey(_window, GLFW_KEY_ESCAPE))
-		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		_renderer->GetCamera().ProcessKeyboard(CameraMovement::RIGHT, _deltaTime);
 }
 
 
@@ -87,10 +88,10 @@ void Window::SetCallbackFunctions()
 
 void Window::MousePositionCallback(double xpos, double ypos)
 {
-	if (_firstMouse) // initially set to true
+	if (_firstMouse)
 	{
-		_lastMouseX = xpos;
-		_lastMouseY = ypos;
+		_lastMouseX = (float)xpos;
+		_lastMouseY = (float)ypos;
 		_firstMouse = false;
 	}
 
@@ -99,7 +100,7 @@ void Window::MousePositionCallback(double xpos, double ypos)
 	_lastMouseX = (float)xpos;
 	_lastMouseY = (float)ypos;
 
-	_camera.ProcessMouseMovement(_mouseXOffset, _mouseYOffset);
+	_renderer->GetCamera().ProcessMouseMovement(_mouseXOffset, _mouseYOffset);
 }
 
 void Window::KeyboardCallback(int key, int scancode, int action, int mods)

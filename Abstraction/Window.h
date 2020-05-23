@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Camera.h"
+#include "Renderer.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -25,8 +25,8 @@ private:
 	//Mouse tracking
 	float _mouseXOffset, _mouseYOffset, _lastMouseX, _lastMouseY;
 	bool _firstMouse;
-	//TODO: TEMPORAIRE
-	Camera _camera;
+	//The renderer
+	Renderer* _renderer;
 
 
 	/**
@@ -74,7 +74,7 @@ public:
 	const float GetDeltaTime() const { return _deltaTime; }
 	const float GetMouseXOffset() const { return _mouseXOffset; }
 	const float GetMouseYOffset() const { return _mouseYOffset; }
-	Camera GetCamera() const { return _camera; }
+	Renderer& GetRenderer() const { return *_renderer; }
 
 private:
 	/**

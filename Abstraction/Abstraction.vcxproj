@@ -142,7 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Camera3D.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
@@ -156,7 +156,8 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Camera3D.h" />
+    <ClInclude Include="ICamera.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="IndexBuffer.h" />

@@ -1,9 +1,10 @@
-#ifndef CAMERA_H
-#define CAMERA_H
+#ifndef CAMERA3D_H
+#define CAMERA3D_H
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "ICamera.h"
 
 #include <vector>
 
@@ -14,20 +15,9 @@ const float SPEED = 2.5f;
 const float SENSITIVITY = 0.1f;
 
 /**
-*	Abstraction for all the movements to prevent it from bein OS specific
-*/
-enum class CameraMovement
-{
-    FORWARD,
-    BACKWARD,
-    LEFT,
-    RIGHT
-};
-
-/**
 *	Abstraction of a camera that allows to calculate the view matrix
 */
-class Camera
+class Camera3D : public ICamera
 {
 private:
     //Angle (in degree) for the rotation along the y axis
@@ -58,7 +48,7 @@ public:
     *   @param yaw Angle (in degree) for the rotation along the y axis
     *   @param pitch Angle (in degree) for the rotation along the x axis
     */
-    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
+    Camera3D(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
 
     /**
     *	Creating all the camera vectors and initializing values (using components)
@@ -72,7 +62,7 @@ public:
     *   @param yaw Angle (in degree) for the rotation along the y axis
     *   @param pitch Angle (in degree) for the rotation along the x axis
     */
-    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
+    Camera3D(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
     /**
     *   Moves the camera using its position vector based on delta time and speed
@@ -83,7 +73,6 @@ public:
     *   Rotate the camera using its pitch and yaw based on mouse sensitivity and x/y offset
     */
     void ProcessMouseMovement(float xoffset, float yoffset);
-
 
     //Getters
     glm::mat4 GetViewMatrix() { return glm::lookAt(_position, _position + _front, _up); };
