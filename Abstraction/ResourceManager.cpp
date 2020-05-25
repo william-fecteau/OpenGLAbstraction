@@ -15,7 +15,6 @@ ResourceManager::~ResourceManager()
     for (itr = _resourcesMap.begin(); itr != _resourcesMap.end(); itr++)
     {
         itr->second->UnloadResource();
-        delete itr->second->GetPath();
         delete itr->second;
     }
 
@@ -28,32 +27,14 @@ ResourceManager* ResourceManager::GetInstance()
     return g_instance;
 }
 
-void ResourceManager::AddResource(Resource& resource, const std::string& name, const std::string& path)
+void ResourceManager::AddResource(Resource* resource, const std::string& name, const std::string& path)
 {
 	if (_resourcesMap.find(name) == _resourcesMap.end())
 	{
-		_resourcesMap[name] = &resource;
-        resource.SetResourceId(_resourcesMap.size());
-        
-        //Creating new copy of that path to be sure that it will exist even if that reference is deleted somewhat
-        resource.SetPath(new std::string(path));
+		_resourcesMap[name] = resource;
+        resource->SetResourceId(_resourcesMap.size());
+        resource->SetResourcePath(path);
 	}
 	//else resource already exist -> error handling
 }
 
-
-void ResourceManager::RemoveResource(const std::string& name)
-{
-    if (_resourcesMap.find(name) == _resourcesMap.end())
-    {
-        //Not found -> Error handling
-    }
-    else
-    {
-        Resource* res = _resourcesMap.find(name)->second;
-        _resourcesMap.erase(name);
-        res->UnloadResource();
-        delete res->GetPath();
-        delete res;
-    }
-}

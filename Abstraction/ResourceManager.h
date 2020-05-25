@@ -17,8 +17,27 @@ public:
 
 	static ResourceManager* GetInstance();
 
-	void AddResource(Resource& resource, const std::string& name, const std::string& path);
-	void RemoveResource(const std::string& name);
+	void AddResource(Resource* resource, const std::string& name, const std::string& path);
+	
+	template <typename T>
+	void RemoveResource(const std::string& name)
+	{
+		if (_resourcesMap.find(name) == _resourcesMap.end())
+		{
+			//Not found -> Error handling
+		}
+		else
+		{
+			T* res = dynamic_cast<T*>(_resourcesMap.find(name)->second);
+			if (res != nullptr)
+			{
+				res->UnloadResource();
+				delete res;
+			}
+
+			_resourcesMap.erase(name);
+		}
+	}
 
 	template <typename T>
 	T* GetResource(const std::string& name)
@@ -29,7 +48,14 @@ public:
 		}
 		else
 		{
-			return dynamic_cast<T*>(_resourcesMap.find(name)->second);
+			T* resource = dynamic_cast<T*>(_resourcesMap.find(name)->second);
+
+			if (resource == nullptr) 
+			{
+				LOG("NULL RESOURCE");
+			}	
+
+			return resource;
 		}
 
 	}

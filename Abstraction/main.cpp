@@ -10,6 +10,8 @@
 #include "Image.h"
 #include "ResourceManager.h"
 
+#include <string>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -66,19 +68,16 @@ int main()
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	//Test scope for resource manager
 	{
-		Image img;
-		ResourceManager::GetInstance()->AddResource(img, "container", "C:\\Users\\willi\\Downloads\\container.jpg");
+		//Random scope
+		ResourceManager::GetInstance()->AddResource(new Image, "container", "C:\\Users\\willi\\Downloads\\container.jpg");
 	}
 
 	Image* test = ResourceManager::GetInstance()->GetResource<Image>("container");
 	test->LoadResource();
 	Texture tex(*test);
 
-
-	Image img2(true);
-	ResourceManager::GetInstance()->AddResource(img2, "smiley", "C:\\Users\\willi\\Downloads\\awesomeface.png");
+	ResourceManager::GetInstance()->AddResource(new Image(true), "smiley", "C:\\Users\\willi\\Downloads\\awesomeface.png");
 	Image* test2 = ResourceManager::GetInstance()->GetResource<Image>("smiley");
 	test2->LoadResource();
 	Texture tex2(*test2);

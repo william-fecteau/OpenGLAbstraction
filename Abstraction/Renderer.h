@@ -13,14 +13,19 @@
 	#define GLCall(x) GLClearError();\
 		x;\
 		if(!GLLogCall(#x, __FILE__, __LINE__)) __debugbreak();
+
+		#define LOG(x) Log(x, __FILE__, __LINE__);
 #else
 	#define GLCall(x) x
+	#define LOG(x)
 #endif
 
 /**
 *	Clears the OpenGL error flags
 */
 void GLClearError();
+
+void Log(const char* message, const char* file, int line);
 
 //TODO: TEMPORARY HARDCODED SHADER PROGRAM
 const std::string vertexPath = "C:\\Users\\willi\\Desktop\\Workspace\\OpenGLAbstraction\\shaders\\vertex.vs";

@@ -28,6 +28,11 @@ void Renderer::Render() const
 	_shaderProgram.SetMat4("view", view);
 }
 
+void Log(const char* message, const char* file, int line)
+{
+	std::cout << "[Log] " << message  << " " <<  file << ":" << line << std::endl;
+}
+
 void GLClearError()
 {
 	while (glGetError() != GL_NO_ERROR);
