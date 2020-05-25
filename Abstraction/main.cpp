@@ -8,6 +8,7 @@
 #include "IndexBuffer.h"
 #include "Texture.h"
 #include "Image.h"
+#include "ResourceManager.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -65,12 +66,22 @@ int main()
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	//Resource stuff
-	Image img("C:\\Users\\willi\\Downloads\\container.jpg");
-	Texture tex(img);
+	//Test scope for resource manager
+	{
+		Image img;
+		ResourceManager::GetInstance()->AddResource(img, "container", "C:\\Users\\willi\\Downloads\\container.jpg");
+	}
 
-	Image img2("C:\\Users\\willi\\Downloads\\awesomeface.png", true);
-	Texture tex2(img2);
+	Image* test = ResourceManager::GetInstance()->GetResource<Image>("container");
+	test->LoadResource();
+	Texture tex(*test);
+
+
+	Image img2(true);
+	ResourceManager::GetInstance()->AddResource(img2, "smiley", "C:\\Users\\willi\\Downloads\\awesomeface.png");
+	Image* test2 = ResourceManager::GetInstance()->GetResource<Image>("smiley");
+	test2->LoadResource();
+	Texture tex2(*test2);
 
 	//Vertex array stuff
 	VertexArray va;

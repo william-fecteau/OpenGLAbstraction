@@ -1,8 +1,9 @@
 #pragma once
 
-#include "string"
+#include <string>
+#include "Resource.h"
 
-class Image
+class Image : public Resource
 {
 private:
 	unsigned char* _data;
@@ -12,8 +13,11 @@ private:
 	bool _transparency;
 
 public:
-	Image(const std::string& path, const bool transparency = false);
+	Image(const bool transparency = false);
 	~Image();
+
+	void LoadResource();
+	void UnloadResource();
 
 	const unsigned char* GetData() const { return _data; };
 	const int GetWidth() const { return _width; };

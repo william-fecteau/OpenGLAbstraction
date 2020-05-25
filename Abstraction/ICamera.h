@@ -31,6 +31,6 @@ public:
 
 
     //Used by the Window to get the view matrix out of the camera
-    virtual glm::mat4 GetViewMatrix() { return glm::mat4(1.0f); };
+    virtual glm::mat4 GetViewMatrix() const { return glm::mat4(1.0f); };
 };
 #endif

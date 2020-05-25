@@ -1,0 +1,36 @@
+#pragma once
+
+#include <unordered_map>
+#include <string>
+#include "Resource.h"
+
+class ResourceManager
+{
+private:
+	std::unordered_map< std::string, Resource*> _resourcesMap;
+	static ResourceManager* g_instance;
+	
+	//Empêche la construction d'un objet -> on doit passer par GetInstance()
+	ResourceManager();
+public:
+	~ResourceManager();
+
+	static ResourceManager* GetInstance();
+
+	void AddResource(Resource& resource, const std::string& name, const std::string& path);
+	void RemoveResource(const std::string& name);
+
+	template <typename T>
+	T* GetResource(const std::string& name)
+	{
+		if (_resourcesMap.find(name) == _resourcesMap.end())
+		{
+			//TODO: ERROR handling (not found)   
+		}
+		else
+		{
+			return dynamic_cast<T*>(_resourcesMap.find(name)->second);
+		}
+
+	}
+};

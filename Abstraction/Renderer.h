@@ -5,6 +5,7 @@
 #include "ICamera.h"
 #include "ShaderProgram.h"
 
+
 //Don't define DEBUG to be in PRODUCITON mode (No debug message in console)
 #define DEBUG
 
@@ -36,7 +37,7 @@ class Renderer
 {
 private:
 	ICamera* _camera;
-	ShaderProgram* _shaderProgram;
+	ShaderProgram _shaderProgram;
 
 public:
 	Renderer();
@@ -44,8 +45,8 @@ public:
 	void Render() const;
 
 	//Getters
-	ICamera& GetCamera() const { return *_camera; }
-	ShaderProgram& GetShaderProgram() const { return *_shaderProgram; }
+	ICamera* GetCamera() const { return _camera; }
+	const ShaderProgram& GetShaderProgram() const { return _shaderProgram; }
 };
 
 #endif

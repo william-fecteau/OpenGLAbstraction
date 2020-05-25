@@ -75,7 +75,7 @@ public:
     void ProcessMouseMovement(float xoffset, float yoffset);
 
     //Getters
-    glm::mat4 GetViewMatrix() { return glm::lookAt(_position, _position + _front, _up); };
+    glm::mat4 GetViewMatrix() const { return glm::lookAt(_position, _position + _front, _up); };
 
 
 private:

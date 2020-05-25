@@ -67,13 +67,13 @@ void Window::UpdateDeltaTime()
 void Window::PollInput()
 {
 	if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
-		_renderer->GetCamera().ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
+		_renderer->GetCamera()->ProcessKeyboard(CameraMovement::FORWARD, _deltaTime);
 	if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS)
-		_renderer->GetCamera().ProcessKeyboard(CameraMovement::BACKWARD, _deltaTime);
+		_renderer->GetCamera()->ProcessKeyboard(CameraMovement::BACKWARD, _deltaTime);
 	if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS)
-		_renderer->GetCamera().ProcessKeyboard(CameraMovement::LEFT, _deltaTime);
+		_renderer->GetCamera()->ProcessKeyboard(CameraMovement::LEFT, _deltaTime);
 	if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS)
-		_renderer->GetCamera().ProcessKeyboard(CameraMovement::RIGHT, _deltaTime);
+		_renderer->GetCamera()->ProcessKeyboard(CameraMovement::RIGHT, _deltaTime);
 }
 
 
@@ -100,7 +100,7 @@ void Window::MousePositionCallback(double xpos, double ypos)
 	_lastMouseX = (float)xpos;
 	_lastMouseY = (float)ypos;
 
-	_renderer->GetCamera().ProcessMouseMovement(_mouseXOffset, _mouseYOffset);
+	_renderer->GetCamera()->ProcessMouseMovement(_mouseXOffset, _mouseYOffset);
 }
 
 void Window::KeyboardCallback(int key, int scancode, int action, int mods)
