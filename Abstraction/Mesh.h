@@ -16,6 +16,7 @@ struct Vertex
 {
 	glm::vec3 _position;
 	glm::vec2 _texCoords;
+	glm::vec3 _normals;
 };
 
 class Mesh : public Resource
@@ -29,7 +30,7 @@ private:
 	//std::vector<Texture> textures;
 
 public:
-	Mesh(std::vector<glm::vec3>& vertices, std::vector<glm::vec2> texturesPos);
+	Mesh(std::vector<glm::vec3>& vertices, std::vector<glm::vec2> texturesPos = {}, std::vector<glm::vec3> normals = {});
 	void LoadResource();
 	void UnloadResource();
 	void Render(const ShaderProgram& shader);

@@ -1,22 +1,23 @@
 #include "Renderer.h"
-#include "Image.h"
-#include "Texture.h"
-#include "VertexBufferLayout.h"
-#include "VertexArray.h"
-#include "VertexBuffer.h"
-#include "Camera3D.h"
 #include <iostream>
 
-Renderer::Renderer() : _shaderProgram(vertexPath, fragmentPath)
+Renderer::Renderer(ICamera* camera, glm::mat4* projection) : _shaderProgram(vertexPath, fragmentPath)
 {
-	_camera = new Camera3D();
+	_camera = camera;
 
 	//Projection matrix
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-
-	//Uniform stuff 
+	if (projection == nullptr)
+	{
+		projection = &glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	}
+	
 	_shaderProgram.Bind();
-	_shaderProgram.SetMat4("projection", projection);
+	_shaderProgram.SetMat4("projection", *projection);
+}
+
+Renderer::~Renderer()
+{
+	delete _camera;
 }
 
 void Renderer::Render() const
@@ -24,8 +25,20 @@ void Renderer::Render() const
 	//View matrix
 	glm::mat4 view = _camera->GetViewMatrix();
 
+	for (Mesh* mesh : _meshToRender)
+	{
+		mesh->Render(_shaderProgram);
+	}
+
+	_meshToRender.clear();
+
 	_shaderProgram.Bind();
 	_shaderProgram.SetMat4("view", view);
+}
+
+void Renderer::AddToRender(Mesh& mesh)
+{
+	_meshToRender.push_back(&mesh);
 }
 
 void Log(const char* message, const char* file, int line)

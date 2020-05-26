@@ -45,6 +45,7 @@ public:
 		if (_resourcesMap.find(name) == _resourcesMap.end())
 		{
 			//TODO: ERROR handling (not found)   
+			return nullptr;
 		}
 		else
 		{
@@ -52,7 +53,7 @@ public:
 
 			if (resource == nullptr) 
 			{
-				LOG("NULL RESOURCE");
+
 			}	
 
 			return resource;

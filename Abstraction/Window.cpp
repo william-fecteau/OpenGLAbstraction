@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Camera3D.h"
 
 Window::Window(const std::string& name, const int width, const int height) : _name(name), _width(width), _height(height), _mouseXOffset(0), _mouseYOffset(0), _lastMouseX(_width / 2.0f), _lastMouseY(_height / 2.0f), _firstMouse(true)
 {
@@ -27,7 +28,7 @@ Window::Window(const std::string& name, const int width, const int height) : _na
 	glEnable(GL_DEPTH_TEST);
 	SetCallbackFunctions();
 
-	_renderer = new Renderer();
+	_renderer = new Renderer(new Camera3D);
 
 	UpdateDeltaTime();
 
@@ -37,6 +38,7 @@ Window::Window(const std::string& name, const int width, const int height) : _na
 Window::~Window()
 {
 	glfwTerminate();
+	delete _renderer;
 }
 
 void Window::Render()

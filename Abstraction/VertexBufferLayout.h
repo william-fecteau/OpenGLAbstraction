@@ -34,10 +34,6 @@ struct VertexBufferElement
 				return 4;
 			case GL_BYTE:
 				return 1;
-			case VEC2:
-				return 8;
-			case VEC3:
-				return 12;
 		}
 
 		return 0;

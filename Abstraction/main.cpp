@@ -1,11 +1,6 @@
 #include "Window.h"
 #include <iostream>
 
-#include "ShaderProgram.h"
-#include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
-#include "VertexArray.h"
-#include "IndexBuffer.h"
 #include "Texture.h"
 #include "Image.h"
 #include "ResourceManager.h"
@@ -65,6 +60,51 @@ const float rawData[] =
 	-0.5f,  0.5f, -0.5f, 0.0f, 1.0f
 };
 
+const float rawDataNoTexture[] =
+{
+	-0.5f, -0.5f, -0.5f,
+	 0.5f, -0.5f, -0.5f,
+	 0.5f,  0.5f, -0.5f,  
+	 0.5f,  0.5f, -0.5f, 
+	-0.5f,  0.5f, -0.5f,  
+	-0.5f, -0.5f, -0.5f, 
+
+	-0.5f, -0.5f,  0.5f, 
+	 0.5f, -0.5f,  0.5f,  
+	 0.5f,  0.5f,  0.5f,  
+	 0.5f,  0.5f,  0.5f, 
+	-0.5f,  0.5f,  0.5f, 
+	-0.5f, -0.5f,  0.5f, 
+
+	-0.5f,  0.5f,  0.5f, 
+	-0.5f,  0.5f, -0.5f,  
+	-0.5f, -0.5f, -0.5f,  
+	-0.5f, -0.5f, -0.5f, 
+	-0.5f, -0.5f,  0.5f, 
+	-0.5f,  0.5f,  0.5f,  
+
+	 0.5f,  0.5f,  0.5f, 
+	 0.5f,  0.5f, -0.5f, 
+	 0.5f, -0.5f, -0.5f, 
+	 0.5f, -0.5f, -0.5f, 
+	 0.5f, -0.5f,  0.5f, 
+	 0.5f,  0.5f,  0.5f,  
+
+	-0.5f, -0.5f, -0.5f, 
+	 0.5f, -0.5f, -0.5f, 
+	 0.5f, -0.5f,  0.5f, 
+	 0.5f, -0.5f,  0.5f,  
+	-0.5f, -0.5f,  0.5f, 
+	-0.5f, -0.5f, -0.5f,  
+
+	-0.5f,  0.5f, -0.5f, 
+	 0.5f,  0.5f, -0.5f, 
+	 0.5f,  0.5f,  0.5f, 
+	 0.5f,  0.5f,  0.5f, 
+	-0.5f,  0.5f,  0.5f, 
+	-0.5f,  0.5f, -0.5f, 
+};
+
 
 int main()
 {
@@ -89,6 +129,7 @@ int main()
 	Image* test2 = ResourceManager::GetInstance()->GetResource<Image>("smiley");
 	test2->LoadResource();
 	Texture tex2(*test2);
+
 	//Uniform stuff
 	window.GetRenderer().GetShaderProgram().SetInt("tex", 0);
 	window.GetRenderer().GetShaderProgram().SetInt("tex2", 1);
@@ -107,7 +148,7 @@ int main()
 		window.GetRenderer().GetShaderProgram().Bind();
 		window.GetRenderer().GetShaderProgram().SetMat4("model", model);
 
-		testMesh.Render(window.GetRenderer().GetShaderProgram());
+		window.GetRenderer().AddToRender(testMesh);
 		window.Render();
 	}
 }

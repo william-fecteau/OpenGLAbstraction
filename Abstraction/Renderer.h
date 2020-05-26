@@ -1,10 +1,10 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include <glad/glad.h>
-#include "ICamera.h"
 #include "ShaderProgram.h"
-
+#include "ICamera.h"
+#include <vector>
+#include "Mesh.h"
 
 //Don't define DEBUG to be in PRODUCITON mode (No debug message in console)
 #define DEBUG
@@ -43,11 +43,15 @@ class Renderer
 private:
 	ICamera* _camera;
 	ShaderProgram _shaderProgram;
+	mutable std::vector<Mesh*> _meshToRender;
 
 public:
-	Renderer();
+	Renderer(ICamera* camera, glm::mat4* projection = nullptr);
+	~Renderer();
 
 	void Render() const;
+
+	void AddToRender(Mesh& mesh);
 
 	//Getters
 	ICamera* GetCamera() const { return _camera; }
