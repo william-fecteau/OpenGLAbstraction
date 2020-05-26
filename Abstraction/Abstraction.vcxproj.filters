@@ -59,6 +59,9 @@
     <ClCompile Include="Window.cpp">
       <Filter>src\renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>src\resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VertexBuffer.h">
@@ -99,6 +102,9 @@
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>src\resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

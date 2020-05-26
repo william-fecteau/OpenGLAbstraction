@@ -147,6 +147,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Camera3D.h" />
     <ClInclude Include="ICamera.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="Resource.h" />

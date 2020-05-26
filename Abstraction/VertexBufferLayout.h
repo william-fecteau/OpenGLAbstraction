@@ -1,6 +1,10 @@
 #pragma once
 #include <vector>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 /**
 *	One element in a vertex buffer.
 *	Example: position is an element composed of 3 float (x,y,z)
@@ -30,6 +34,10 @@ struct VertexBufferElement
 				return 4;
 			case GL_BYTE:
 				return 1;
+			case VEC2:
+				return 8;
+			case VEC3:
+				return 12;
 		}
 
 		return 0;

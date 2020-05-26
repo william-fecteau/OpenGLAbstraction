@@ -18,12 +18,14 @@ public:
 	*	@param data Pointer to the buffer data array
 	*	@param size Total size (in bytes) of the buffer data array
 	*/
-	VertexBuffer(const void* data, unsigned int size);
+	VertexBuffer();
 	
 	/**
 	*	Delete this vertex buffer from OpenGL context
 	*/
 	~VertexBuffer();
+
+	void SetData(const void* data, unsigned int size);
 
 	/**
 	*	Binds this vertex buffer as a GL_ARRAY_BUFFER to the OpenGL context

@@ -11,68 +11,76 @@
 #include "ResourceManager.h"
 
 #include <string>
+#include <vector>
+#include "Mesh.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Renderer.h"
+
+const float rawData[] = 
+{
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+	-0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f, 0.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f, 0.0f, 1.0f
+};
+
+
 int main()
 {
 	Window window("Test2", 800, 600);
 
-	//IndexBuffer ib(indices, 6);
-
-	//Cube vertices
-	float vertices[] =
+	std::vector<glm::vec3> verticesVec;
+	std::vector<glm::vec2> texturesPos;
+	for (size_t i = 0; i < sizeof(rawData) / sizeof(float); i+=5)
 	{
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-	};
-
-	{
-		//Random scope
-		ResourceManager::GetInstance()->AddResource(new Image, "container", "C:\\Users\\willi\\Downloads\\container.jpg");
+		verticesVec.push_back(glm::vec3(rawData[i], rawData[i+1], rawData[i+2]));
+		texturesPos.push_back(glm::vec2(rawData[i+3], rawData[i+4]));
 	}
 
+	Mesh testMesh(verticesVec, texturesPos);
+
+	ResourceManager::GetInstance()->AddResource(new Image, "container", "C:\\Users\\willi\\Downloads\\container.jpg");
 	Image* test = ResourceManager::GetInstance()->GetResource<Image>("container");
 	test->LoadResource();
 	Texture tex(*test);
@@ -81,19 +89,9 @@ int main()
 	Image* test2 = ResourceManager::GetInstance()->GetResource<Image>("smiley");
 	test2->LoadResource();
 	Texture tex2(*test2);
-
-	//Vertex array stuff
-	VertexArray va;
-	VertexBuffer vb(vertices, sizeof(vertices) * sizeof(float));
-	VertexBufferLayout layout;
-	layout.Push<float>(3);
-	layout.Push<float>(2);
-	va.AddBuffer(vb, layout);
-
 	//Uniform stuff
 	window.GetRenderer().GetShaderProgram().SetInt("tex", 0);
 	window.GetRenderer().GetShaderProgram().SetInt("tex2", 1);
-
 	glfwSetInputMode(window.GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	//Render loop
@@ -109,9 +107,7 @@ int main()
 		window.GetRenderer().GetShaderProgram().Bind();
 		window.GetRenderer().GetShaderProgram().SetMat4("model", model);
 
-		va.Bind();
-
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		testMesh.Render(window.GetRenderer().GetShaderProgram());
 		window.Render();
 	}
 }
