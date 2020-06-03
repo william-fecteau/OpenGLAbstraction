@@ -5,6 +5,7 @@
 
 #include "VertexArray.h"
 #include "VertexBuffer.h"
+#include "IndexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "ShaderProgram.h"
 
@@ -23,14 +24,16 @@ class Mesh : public Resource
 {
 private:
 	std::vector<Vertex> _vertices;
+	std::vector<unsigned int> _indices;
 	VertexArray _va;
 	VertexBuffer _vb;
+	IndexBuffer _ib;
 	VertexBufferLayout _vbl;
 
 	//std::vector<Texture> textures;
 
 public:
-	Mesh(std::vector<glm::vec3>& vertices, std::vector<glm::vec2> texturesPos = {}, std::vector<glm::vec3> normals = {});
+	Mesh(std::vector<glm::vec3>& vertices, std::vector<unsigned int> indices, std::vector<glm::vec3> normals, std::vector<glm::vec2> texturePos = {});
 	void LoadResource();
 	void UnloadResource();
 	void Render(const ShaderProgram& shader);

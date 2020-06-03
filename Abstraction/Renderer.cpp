@@ -25,15 +25,15 @@ void Renderer::Render() const
 	//View matrix
 	glm::mat4 view = _camera->GetViewMatrix();
 
+	_shaderProgram.Bind();
+	_shaderProgram.SetMat4("view", view);
+
 	for (Mesh* mesh : _meshToRender)
 	{
 		mesh->Render(_shaderProgram);
 	}
 
 	_meshToRender.clear();
-
-	_shaderProgram.Bind();
-	_shaderProgram.SetMat4("view", view);
 }
 
 void Renderer::AddToRender(Mesh& mesh)

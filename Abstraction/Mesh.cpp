@@ -1,16 +1,19 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<glm::vec3>& vertices, std::vector<glm::vec2> texturesPos, std::vector<glm::vec3> normals)
+Mesh::Mesh(std::vector<glm::vec3>& vertices, std::vector<unsigned int> indices, std::vector<glm::vec3> normals, std::vector<glm::vec2> texturePos)
 {
 	for (size_t i = 0; i < vertices.size(); i++)
 	{
 		Vertex vertex;
 		vertex._position = vertices[i];
-		if(!texturesPos.empty()) vertex._texCoords = texturesPos[i];
-		if(!normals.empty()) vertex._normals = normals[i];
+		if(!texturePos.empty()) vertex._texCoords = texturePos[i];
 
 		_vertices.push_back(vertex);
 	}
+
+	_indices = indices;
+
+	_ib.SetData(&_indices[0], _indices.size());
 
 	_vb.SetData(&_vertices[0], _vertices.size() * 8 * sizeof(float));
 	_vbl.Push<float>(3);
@@ -23,7 +26,9 @@ void Mesh::Render(const ShaderProgram& shader)
 {
 	shader.Bind();
 	_va.Bind();
-	glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
+	_ib.Bind();
+	//glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
+	glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, nullptr);
 }
 
 void Mesh::LoadResource()
